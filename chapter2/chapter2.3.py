@@ -59,4 +59,89 @@ letters = 'abcdefghijklmnopqrstuvwxyz'
 print(letters[:])
 print(letters[20:])
 print(letters[1:3])
+# 最後の3文字を取り出す
 print(letters[-3:])
+
+print(letters[18:-3])
+# 末尾6文字手前から末尾3文字手前まで
+print(letters[-6:-2])
+print(letters[::7])
+print(letters[4:20:3])
+print(letters[19::4])
+print(letters[:21:5])
+
+print(letters[-1::-1])
+print(letters[::-1])
+print(letters[-50::])
+print('[-50:-51]:' + letters[-50:-51:])
+
+# 2.3.8 len()による長さの取得
+# len()は文字列専用の関数ではない
+print('--- 2.3.8 ---')
+print(len(letters))
+# 全角文字も一文字とする
+print(len('あいうえお'))
+print(len(''))
+# 下記の処理で例外が起こされる
+# print(len(None))
+
+# 2.3.9 split()による分割
+print('--- 2.3.9 ---')
+split_t1 = 'abcd, efg hijk\nlmn\topq'
+# セパレータを指定していないsplit()は、
+# セパレータとして空白文字（改行、スペース、タブ）のシーケンスを使う
+print(split_t1.split())
+print(split_t1.split(', '))
+
+# 2.3.10 join()による結合
+print('--- 2.3.10 ---')
+crypto_list = ['Yeti', 'Bigfoot', 'Loch Ness Monster']
+crypto_string = ', '.join(crypto_list)
+print(crypto_string)
+
+# 2.3.11 多彩な文字列操作
+print('--- 2.3.11 ---')
+poem = '''All that doth flow we cannot liquid name
+Or else would fire and water be the same;
+But that is liquid which is moist and wet
+Fire that property can never get.
+Then 'tis not cold that doth the fire put out
+But 'tis the wet that makes it die not doubt.'''
+print(poem.startswith('All'))
+print(poem.endswith('But \'tis the wet that makes it die not doubt.'))
+word = 'the'
+# find():最初に現れる箇所のオフセットを返す
+print(poem.find(word))
+print(poem.rfind(word))
+print(poem.count(word))
+
+# 2.3.12 大文字と小文字の区別、配置
+print('--- 2.3.12 ---')
+setup = 'a duck GOES into a bar ...'
+print(setup)
+# strip():両端から'r', ' ', '.'のシーケンスを取り除こう
+# 文字列はイミュータブルなので、setup文字列を実際に書き換えない
+print(setup.strip('r .'))
+# 先頭の単語を大文字にし、ほかを小文字にする
+print(setup.capitalize())
+# 全ての単語をタイトルケースにする
+print(setup.title())
+# 全ての文字を大文字にする
+print(setup.upper())
+# 全ての文字を小文字にする
+print(setup.lower())
+# 大文字小文字を逆にする
+print(setup.swapcase())
+# 指定したスペースの中で文字列をどのように配置するかを決める
+print(setup.center(30))
+print(setup.ljust(30))
+print(setup.rjust(30))
+# 2.3.13 replace()による置換
+replace_t1 = 'aaaaaaacccccccc'
+print(replace_t1.replace('a', 'b'))
+# 置換関数は第三引数で指定することができる
+print(replace_t1.replace('a', 'b', 3))
+
+
+
+
