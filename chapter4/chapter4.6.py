@@ -32,8 +32,32 @@ print('--- 4.6.2 ---')
 word = 'letters'
 letter_counts = {letter: word.count(letter) for letter in word}
 print(letter_counts)
+print(set(word))
+letter_counts = {letter: letter for letter in set(word)}
+print(letter_counts)
 
+# 4.6.3 集合内包表記
+print('--- 4.6.3 ---')
+# 文法：{item for item in iterator}
+a_set = {number for number in range(1, 6) if number % 3 == 1}
+print(a_set)
 
+# 4.6.4 集合内包表記
+print('--- 4.6.4 ---')
+# 普通の括弧での内包表記：ジェネレータ内包表記
+# イテレータにデータを供給する方法の一つである
+number_thing = (number for number in range(1, 6))
+print(number_thing)
+print(type(number_thing))
 
+for number in number_thing:
+    print(number)
 
-
+# ジェネレータはlist()関数でラッパすれば、
+# リスト内包表記のように動作させることができる
+number_list = list(number_thing)
+print(number_list)
+# ジェネレータは一度しか実行できない
+number_thing = (number for number in range(1, 6))
+number_list = list(number_thing)
+print(number_list)
