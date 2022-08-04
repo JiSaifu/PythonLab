@@ -87,9 +87,12 @@ finch
 >>> marxes.append('Zeppo')
 >>> print(marxes)
 ['Groucho', 'Chico', 'Wanda', 'Saifu', 'Zeppo']
->>> marxes.append(['Mike', 'Tom'])
+>>> marxes.extend(['Mike', 'Tom'])
 >>> marxes
-['Groucho', 'Chico', 'Wanda', 'Saifu', 'Zeppo', ['Mike', 'Tom']]
+['Groucho', 'Chico', 'Wanda', 'Saifu', 'Zeppo', 'Mike', 'Tom']
+>>> marxes += ['aaa', 'bbb']
+>>> marxes
+['Groucho', 'Chico', 'Wanda', 'Saifu', 'Zeppo', 'Mike', 'Tom', 'aaa', 'bbb']
 ```
 ### 3.2.9 insert()によるオフセットを指定した**要素**の追加
 - リスト.insert(オフセット, インサート対象要素): 対象要素をリストの指定オフセット要素の**直前**に追加する
@@ -487,6 +490,8 @@ False
     {1}
     >>> a.difference(b)
     {1}
+    >>> b - a
+    {4}
     ```
 - 排他的OR(どちらか片方に含まれているが、両方には含まれていない要素の集合):
     - 集合a ^ 集合b
