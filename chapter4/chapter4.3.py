@@ -9,6 +9,7 @@ else:
     print("Whee")
 # pythonでは、インデントによってif、else節が、
 # どのように対応しているかを表現する
+
 print("out of if block")
 
 color = "puce"
