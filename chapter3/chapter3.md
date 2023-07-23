@@ -1,7 +1,7 @@
 # 3章 Pythonの具：リスト、タプル、辞書、集合
 ## 3.1 リストとタプル
-- ミュータブル：型の変数に入っているデータの値が変更できる。
-- イミュータブル：型の変数に入っているデータの値が変更できない。
+- ミュータブル(mutable)：型の変数に入っているデータの値が変更できる。
+- イミュータブル(immutable)：型の変数に入っているデータの値が変更できない。
 ---
 ## 3.2 リスト
 ### 3.2.1 []またはlist()による作成
@@ -59,7 +59,7 @@ finch
 >>> marxes
 ['Groucho', 'Chico', 'Wanda', 'Saifu']
 ```
-### 3.2.6 オフセットの範囲を指定したスライスによるサブシーケンスの取り出し
+### 3.2.6 オフセットの範囲を指定したスライス(slice)によるサブシーケンスの取り出し
 - 文字列と同じくスライスによって範囲を指定したリストの取得は可能  
     ※ 取得した要素が1つになっても、1つの要素になるリストになる
 ```python
@@ -67,6 +67,8 @@ finch
 ['Groucho', 'Chico']
 >>> print(marxes[::4]) 
 ['Groucho']
+# Grouchoを始め要素として、取得する。そして、chicoを増分の第一要素として、4つの要素を数えて取得する。
+# 4つ目の要素がないため、何も取得されない
 >>> print(marxes[::-2])
 ['Saifu', 'Chico']
 ```
@@ -82,17 +84,16 @@ finch
 ['Groucho', 'Chico', 'Wanda', 'Saifu', 'Zeppo', ['Mike', 'Tom']]
 ```
 ### 3.2.8 extend()または+=を使った**リスト**の結合
-- リスト1.append(リスト2): リスト1の末尾にリスト2を追加して、1つにまとめる
+- リスト1.extend(リスト2): リスト1の末尾にリスト2を追加して、1つにまとめる
 ```python
->>> marxes.append('Zeppo')
->>> print(marxes)
-['Groucho', 'Chico', 'Wanda', 'Saifu', 'Zeppo']
 >>> marxes.extend(['Mike', 'Tom'])
 >>> marxes
 ['Groucho', 'Chico', 'Wanda', 'Saifu', 'Zeppo', 'Mike', 'Tom']
->>> marxes += ['aaa', 'bbb']
->>> marxes
-['Groucho', 'Chico', 'Wanda', 'Saifu', 'Zeppo', 'Mike', 'Tom', 'aaa', 'bbb']
+# marxes += ['Mike', 'Tom']も同じ結果
+# 文字列をextendで実行する場合、文字列の各文字をリストに変換され、追加されてしまう
+>>> marxes.extend('mama')
+marxes
+['Groucho', 'Chico', 'Wanda', 'Saifu', 'Zeppo', 'Mike', 'Tom', 'm', 'a', 'm', 'a']
 ```
 ### 3.2.9 insert()によるオフセットを指定した**要素**の追加
 - リスト.insert(オフセット, インサート対象要素): 対象要素をリストの指定オフセット要素の**直前**に追加する
@@ -109,7 +110,7 @@ finch
 ```
 ### 3.2.10 delによる指定したオフセットの要素の削除
 - del リスト[オフセット]: リストから指定したオフセットの要素を削除する  
-    ※ delはPythonの文であり、リストのメソッドではない。
+    ※ delはPythonの文であり、リストのメソッドではない。なので、list.del()ではない
 ```python
 >>> del marxes[-1]
 >>> marxes
@@ -117,12 +118,17 @@ finch
 ```
 ### 3.2.11 remove()による値に基づく要素の削除
 - リスト.remove(削除対象要素の値): リストから指定した削除対象要素の値を検索し、**一番最初にマッチする要素**を削除する
+- 削除対象要素の値はリストに存在しない場合、例外になる
 ```python
 >>> marxes
 ['Groucho', ['tanjiro', 'netsuko'], 'Chico', 'Wanda', 'Saifu', 'Zeppo', ['tanjiro', 'netsuko'], ['Mike', 'Tom'], 'inosuke']
 >>> marxes.remove(['tanjiro', 'netsuko'])
 >>> marxes
 ['Groucho', 'Chico', 'Wanda', 'Saifu', 'Zeppo', ['tanjiro', 'netsuko'], ['Mike', 'Tom'], 'inosuke']
+>>> marxes.remove(['error'])
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ValueError: list.remove(x): x not in list
 ```
 ### 3.2.12 pop()でオフセットを指定して要素を取り出し、削除する方法
 - リスト.pop([オフセット]): リストからオフセットを指定して要素を取り出し、削除する
@@ -140,6 +146,7 @@ Chico
 ```
 ### 3.2.13 index()により要素の値から要素のオフセットを知る方法
 - リスト.index(要素の値): リストから指定した要素の値を検索し、一番最初にマッチする要素のオフセットを返す
+- removeと同じく、対象要素がなければ、例外になる
 ```python
 >>> print(marxes)
 ['Wanda', 'Saifu', 'Zeppo', ['tanjiro', 'netsuko'], ['Mike', 'Tom']]
@@ -162,15 +169,15 @@ True True False
 ```
 ### 3.2.16 join()による文字列への変換
 - 区切り文字列.join(結合対象リスト): 区切り文字列を使って、結合対象リスト中の文字列要素を1つの文字列に結合する
-    ※ joinは文字列のメソッドのため、リストを変換する場合、リストの中身に文字列要素しか含まれない
+    ※ joinは**文字列**のメソッドのため、リストを変換する場合、リストの中身に文字列要素しか含まれない
 ```python
 >>> marxes = ['Chico', 'Wanda', 'Saifu']
 >>> ' * '.join(marxes)
 'Chico * Wanda * Saifu'
 ```
 ### 3.2.17 sort()による要素の並べ替え
-- リスト.sort(): リスト関数のsort()を実行すると、リスト自体を昇順でソートする
-- sorted(リスト)： 汎用関数のsorted()を実行すると、昇順でソートされたリストのコピーを返すが、元リストのソート順は変わらない
+- リスト.sort(): **リスト関数**のsort()を実行すると、リスト自体を昇順でソートする
+- sorted(リスト)： **汎用関数**のsort**ed**()を実行すると、昇順でソートされたリストのコピーを返すが、元リストのソート順は変わらない
     ※ sort()のデフォルトソート順は昇順だが、reverse=True引数を追加すれば降順になる
 ```python
 >>> print(marxes)
@@ -201,9 +208,9 @@ True True False
 4
 ```
 ### 3.2.19 =による代入とcopy()によるコピー
-- リストにおいて（普通の変数と違う）、=による代入はアドレスの代入になる
+- リストにおいて（普通の変数と違う）、=による代入は**アドレス**の代入になる
 - 以下の方法はリスト値をコピーし、新しいリストを作成する
-    - 新リスト = 元リスト.copy() <- これを使ったほうがわかりやすいかな
+    - **新リスト = 元リスト.copy() <- これを使ったほうがわかりやすいかな**
     - 新リスト = list(元リスト)
     - 新リスト = 元リスト[:]
 ```python
@@ -243,6 +250,7 @@ True True False
 - 初期値のあるタプルの作成: ()なしでもOKだが、あったほうがわかりやすい
 ```python
 >>> marx_tuple = ('Groucho', 'Chico', 'Harpo')
+# or marx_tuple = 'Groucho', 'Chico', 'Harpo'
 >>> print(marx_tuple)
 ('Groucho', 'Chico', 'Harpo')
 ```
@@ -276,7 +284,7 @@ Groucho Chico Harpo
 ## 3.4 辞書
 - ミュータブル(キー/値要素を追加、削除、変更することができる)
 - キーにて値を取得する
-- キーは文字列の場合が多いが、イミュータブル型ならでよい（ブール、整数、float、タプル、文字列など）
+- キーは文字列の場合が多いが、イミュータブル型ならでよい（ブール、整数、float、タプル、文字列など、混ぜてもOK）
 - Pythonでは、辞書をdictと呼ぶこともある
 ### 3.4.1 {}による作成
 - {}で空の辞書を作成する
@@ -304,7 +312,7 @@ Groucho Chico Harpo
 >>> print(dict(lol))
 {'a': 'b', 'c': 'd', 'e': 'f'}
 >>>
->>> # 2要素のタプルのリストを辞書に変換
+>>> # 2要素のタプルのリストを辞書に変換（2要素のタプルのタプルもOK）
 >>> lot = [('a', 'b'), ('c', 'd'), ('e', 'f')]
 >>> print(dict(lot))
 {'a': 'b', 'c': 'd', 'e': 'f'}
@@ -400,7 +408,7 @@ KeyError: 'ironman'
 'Tony'
 ```
 ### 3.4.9 keys()によるすべてのキーの取得
-- 辞書.keys(): キー一覧をインタブルなキーのビューであるdict_keys()の形で返す(必要な時間とメモリを使わない)。リストで返す必要な場合、list()で変換する
+- 辞書.keys(): キーの一覧をイテラブルなキーのビューであるdict_keys()の形で返す(必要な時間とメモリを使わない)。リストで返す必要な場合、list()で変換する
 ```python
 >>> pythons.keys()
 dict_keys(['Chapman', 'Cleese', 'Idle'])
@@ -408,7 +416,7 @@ dict_keys(['Chapman', 'Cleese', 'Idle'])
 ['Chapman', 'Cleese', 'Idle']
 ```
 ### 3.4.10 values()によるすべての値の取得
-- 辞書.values(): 値の一覧をインタブルなキーのビューであるdict_values()の形で返す(必要な時間とメモリを使わない)。リストで返す必要な場合、list()で変換する
+- 辞書.values(): 値の一覧をイテラブルなキーのビューであるdict_values()の形で返す(必要な時間とメモリを使わない)。リストで返す必要な場合、list()で変換する
 ```python
 >>> pythons.values()     
 dict_values(['Graham', 'John', 'Eric'])
